@@ -1,0 +1,23 @@
+            <!-- Error message -->
+            {% for i in form %}
+                {% if i.errors %}
+                    <p>{{i.label_tag}}</p>
+                    {% for error in i.errors %}
+                        <p class="text-danger">{{error}}</p>
+                    {% endfor %}
+
+                {% endif %}
+            {% endfor %}
+            <!-- Success Message -->
+             {% if success_msg %}
+                <p class="text-success" id="success">{{success_msg}}</p>
+             {% endif %}
+             {% if messages %}
+                {% for i in messages %}
+                <p class="{% if i.label_tag == 'error' %} bg-danger text-white {% else %} bg-success text-white{% endif %}" id="success">{{i}}</p>
+                {% endfor %}
+             {% endif %}
+              <!-- Non field errors -->
+            {%  for error in form.non_field_errors %}
+                <p class="text-white bg-danger">{{error}}</p>
+            {% endfor %}

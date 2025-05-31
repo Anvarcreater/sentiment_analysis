@@ -1,0 +1,27 @@
+{% extends 'main.html' %}
+
+{% block title %}order{% endblock %}
+
+{% block content %}
+    <div class="container mb-2" style="height: 100vh;">
+        <div class="row">
+            <h2 class="text-center">order details</h2>
+            <form method="post" >
+                {% csrf_token %}
+               <div class="form-group">
+                    <label for="">username</label>
+                    <input type="text"  name="username" value="{{form.username.value | default:''}}" id="username" class="form-control" required>
+               </div>
+                <div class="form-group">
+                    <label for="">phone Number</label>
+                    <input type="number"  name="phone" id="phone"class="form-control"required>
+                </div>
+                <div class="form-group">
+                    <label for="">Address</label>
+                    <textarea name="address"id="address" class="form-control" required></textarea>
+                </div><br>
+                <input type="submit" class="btn btn-warning mt-2 mb-2" value="order now">
+            </form>
+        </div>
+    </div>
+{% endblock %}

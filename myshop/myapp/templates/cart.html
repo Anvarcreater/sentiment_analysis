@@ -1,0 +1,32 @@
+{% extends 'main.html' %}
+{% block title %} cart {% endblock %}
+
+{% block content %}
+    <div class="container-fluid" style="height:100vh">
+        <h2 class="text-center">My Cart</h2>
+        <div class="catprod">
+            {% if cartprod %}
+                {% for i in cartprod %}
+                    <div class="card" >
+                        <img src="{{i.products.product_image.url}}" class="card-img-top" alt="img" style="width:200px;height:150px">
+                        <div class="card-body">
+                            <h5 class="card-title">{{i.products.name}}</h5>
+                            <h6>$:{{i.products.price}}</h6>
+                            <h6>Quantity:{{i.product_quantity}}</h6>
+                            <div style="display:flex;justify-content: space-evenly;column-gap:10px;">
+                                <a href="{% url 'myshop:viewproduct' pk=i.products.id%}" class="btn btn-primary">view product</a>
+                                <a href="{% url 'myshop:removecart' pk=i.id %}" class="btn btn-danger">Remove</a>
+                            </div>
+                            <a href="{% url 'myshop:order' pk=i.id %}" class="btn btn-warning" style="margin-top:5px;">buy now</a>
+                        </div>
+                    </div>
+                {% endfor %}
+                <h5>Total:$ {{total}}</h5>
+                {% else %}
+                <h6>No products added in the cart.......!</h6>
+            {% endif %}
+        </div>
+    </div>
+
+
+{%  endblock %}

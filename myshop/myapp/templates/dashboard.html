@@ -1,0 +1,54 @@
+{% extends 'main.html' %}
+{% block title %}dashboard{% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+    
+    <h3 class="text-center">My orders</h3>
+    <div style="width:100%;display: flex;flex-direction: column;row-gap: 20px;">
+        {% if orderdata %}
+            {% for i in orderdata %}
+                <div style="width:100%;display:flex;justify-content: space-evenly;align-items: center;flex-wrap: wrap;">
+                    <div class="">
+                        <img src="{{i.product.product_image.url}}" alt="img" style="width:150px;height:150px;">
+                    </div>
+                    <div style="display:flex;flex-direction:column;padding:2px;">
+                        <p>product name:{{i.product.name}}</p>
+                        <p>cash paid:${{i.amount}}</p>
+                        <p>username:{{i.username}}</p>
+                        <p>phone number:{{i.phone}}</p>
+                        <p>Address:{{i.address}}</p>
+                        <button type="button" class="
+                        {% if i.status == 'ordered' %}
+                        btn btn-primary 
+                        {% elif i.status == 'shipping' %} 
+                        btn btn-warning 
+                        {% else %}
+                        btn btn-success
+                        {% endif %}">{{i.status}}</button>
+                    </div>
+                </div>
+                {% if i.status == 'delivered' %}
+                    <div style="display:flex;justify-content:center;align-items:center">
+                        <div class="">
+                            <form method="post" action="{% url 'myshop:addfeedback' pk=i.id %}">
+                            {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="">Add Feedback</label>
+                                    <input type="text" name="feedback" id="feedback" placeholder="your feedback" class="form-control" style="width:300px;">
+                                </div>
+                                <button type="submit" class="btn btn-warning mt-3" >Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                {% endif  %}
+            {% endfor %}
+        {% else %}
+        <p class="text-center">No Orders Placed......!</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
